@@ -18,7 +18,6 @@ jobs:
 
     - name: Set up Xcode
       run: |
-        xcode-select --switch /Applications/Xcode.app/Contents/Developer
         xcodebuild -version # Sprawdzenie wersji Xcode
 
     - name: Run tests
