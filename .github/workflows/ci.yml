@@ -17,11 +17,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Set up Xcode
-    - name: Set up Xcode
-      uses: apple-actions/setup-xcode@v3
+    # Set up Xcode environment and install certificates using fastlane match
+    - name: Set up Xcode environment
+      uses: akiojin/setup-xcode-environment-github-action@v2
       with:
-        xcode-version: '16.1'  # Ustaw wersję Xcode, której używasz
+        type: 'development'  # Typ certyfikatu: development, appstore, adhoc, itd.
+        app-identifier: com.example.MyApp  # Zmień na identyfikator Twojej aplikacji
+        team-id: ABC0123456  # Twój Team ID z Apple Developer Portal
+        git-url: 'https://github.com/your-org/certificates'  # Repozytorium Git z certyfikatami
+        git-passphrase: ${{ secrets.APPLE_CERTIFICATE_GIT_PASSPHASE }}  # Hasło do repozytorium
 
     # Run tests
     - name: Run tests
