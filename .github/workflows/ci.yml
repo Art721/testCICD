@@ -16,10 +16,10 @@ jobs:
     - name: Check out the repository
       uses: actions/checkout@v3
 
-    - name: Set up Xcode
-      uses: apple-actions/setup-xcode@v3
-      with:
-        xcode-version: '14.0'
+    - name: Set up macOS with Xcode
+      run: |
+        brew install xcode-select
+        sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 
     - name: Run tests
       run: |
