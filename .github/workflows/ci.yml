@@ -18,14 +18,9 @@ jobs:
       uses: actions/checkout@v3
 
     # Set up fastlane (for managing provisioning profiles and certificates)
-    - name: Set up Xcode environment
-      uses: akiojin/setup-xcode-environment-github-action@v2
-      with:
-        type: 'development'  # Typ certyfikatu: development, appstore, adhoc, itd.
-        app-identifier: com.example.MyApp  # Zmień na identyfikator Twojej aplikacji
-        team-id: ABC0123456  # Twój Team ID z Apple Developer Portal
-        git-url: 'https://github.com/your-org/certificates'  # Repozytorium Git z certyfikatami
-        git-passphrase: ${{ secrets.APPLE_CERTIFICATE_GIT_PASSPHASE }}  # Hasło do repozytorium
+    - name: Install fastlane
+      run: |
+        brew install fastlane
 
     # Authenticate with GitHub to access the certificates repository
     - name: Set up Git credentials
@@ -35,10 +30,20 @@ jobs:
         git config --global credential.helper store
         echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > ~/.git-credentials
 
+    # Set up Xcode environment and install certificates using fastlane match
+    - name: Set up Xcode environment
+      uses: akiojin/setup-xcode-environment-github-action@v2
+      with:
+        type: 'development'  # Typ certyfikatu: development, appstore, adhoc, itd.
+        app-identifier: pl.example.art2.Arkanoid2  # Twój identyfikator aplikacji
+        team-id: 4H8FG658ND  # Twój Team ID z Apple Developer Portal
+        git-url: 'https://github.com/Art721/certificates'  # Repozytorium Git z certyfikatami
+        git-passphrase: ${{ secrets.APPLE_CERTIFICATE_GIT_PASSPHASE }}  # Hasło do repozytorium z certyfikatami
+
     # Run tests
     - name: Run tests
-      run: xcodebuild clean test -project "MyApp.xcodeproj" -scheme "MyApp" -destination "platform=iOS Simulator,name=iPhone 11 Pro Max,OS=latest"
+      run: xcodebuild clean test -project "Arkanoid2.xcodeproj" -scheme "Arkanoid2" -destination "platform=iOS Simulator,name=iPhone 11 Pro Max,OS=latest"
 
     # Build the app
     - name: Build App
-      run: xcodebuild -project "MyApp.xcodeproj" -scheme "MyApp" -destination "generic/platform=iOS" -configuration Release build CODE_SIGNING_ALLOWED=NO
+      run: xcodebuild -project "Arkanoid2.xcodeproj" -scheme "Arkanoid2" -destination "generic/platform=iOS" -configuration Release build CODE_SIGNING_ALLOWED=NO
