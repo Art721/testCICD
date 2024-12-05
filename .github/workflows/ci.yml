@@ -17,7 +17,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Set up Xcode environment and install certificates using fastlane match
+    # Set up fastlane (for managing provisioning profiles and certificates)
     - name: Set up Xcode environment
       uses: akiojin/setup-xcode-environment-github-action@v2
       with:
@@ -26,6 +26,14 @@ jobs:
         team-id: ABC0123456  # Twój Team ID z Apple Developer Portal
         git-url: 'https://github.com/your-org/certificates'  # Repozytorium Git z certyfikatami
         git-passphrase: ${{ secrets.APPLE_CERTIFICATE_GIT_PASSPHASE }}  # Hasło do repozytorium
+
+    # Authenticate with GitHub to access the certificates repository
+    - name: Set up Git credentials
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global credential.helper store
+        echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > ~/.git-credentials
 
     # Run tests
     - name: Run tests
