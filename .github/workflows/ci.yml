@@ -18,7 +18,8 @@ jobs:
 
     - name: Set up Xcode
       run: |
-        sudo xcode-select --switch /Applications/Xcode_14.0.app/Contents/Developer
+        sudo xcode-select --install
+        xcode-select -p # Wypisuje lokalizację Xcode, aby sprawdzić, czy działa
 
     - name: Run tests
       run: |
