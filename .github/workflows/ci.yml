@@ -16,10 +16,9 @@ jobs:
     - name: Check out the repository
       uses: actions/checkout@v3
 
-    - name: Set up macOS with Xcode
+    - name: Set up Xcode
       run: |
-        brew install xcode-select
-        sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+        sudo xcode-select --switch /Applications/Xcode_14.0.app/Contents/Developer
 
     - name: Run tests
       run: |
