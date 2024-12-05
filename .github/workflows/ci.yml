@@ -19,7 +19,7 @@ jobs:
 
     # Set up Xcode
     - name: Set up Xcode
-      uses: actions/setup-xcode@v3
+      uses: apple-actions/setup-xcode@v3
       with:
         xcode-version: '16.1'  # Ustaw wersję Xcode, której używasz
 
