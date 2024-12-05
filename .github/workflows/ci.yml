@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
+    - name: Set up Xcode
+      uses: actions/setup-xcode@v3
+      with:
+        xcode-version: '14.0'
+
+    - name: Run tests
+      run: |
+        xcodebuild test -scheme YourSchemeName
