@@ -1,4 +1,4 @@
-name: CI
+name: iOS CI/CD Pipeline
 
 on:
   push:
@@ -11,16 +11,22 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-
+    
     steps:
-    - name: Check out the repository
+    # Check out the code from your repo
+    - name: Checkout code
       uses: actions/checkout@v3
 
+    # Set up Xcode
     - name: Set up Xcode
-      uses: apple-actions/setup-xcode@v3
+      uses: actions/setup-xcode@v3
       with:
-        xcode-version: '16.1'
+        xcode-version: '16.1'  # Ustaw wersję Xcode, której używasz
 
-    - name: Build and test the project
-      run: |
-        xcodebuild test -scheme "Arkanoid" -destination 'platform=iOS Simulator,name=iPhone 14'
+    # Run tests
+    - name: Run tests
+      run: xcodebuild clean test -project "MyApp.xcodeproj" -scheme "MyApp" -destination "platform=iOS Simulator,name=iPhone 11 Pro Max,OS=latest"
+
+    # Build the app
+    - name: Build App
+      run: xcodebuild -project "MyApp.xcodeproj" -scheme "MyApp" -destination "generic/platform=iOS" -configuration Release build CODE_SIGNING_ALLOWED=NO
